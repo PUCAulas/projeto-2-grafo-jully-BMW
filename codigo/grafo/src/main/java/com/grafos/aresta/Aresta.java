@@ -1,31 +1,49 @@
 package com.grafos.aresta;
 
-public class Aresta {
-    private String destino;
-    private int peso;
+import com.grafos.vertice.Vertice;
 
-    public Aresta(String destino, int peso) {
+public class Aresta {
+    private Vertice origem;
+    private Vertice destino;
+    private int distancia;
+    
+    public Aresta(Vertice origem, Vertice destino, int distancia) {
+        this.origem = origem;
         this.destino = destino;
-        this.peso = peso;
+        this.distancia = distancia;
     }
 
-    public String getDestino() {
+    public Vertice getOrigem() {
+        return this.origem;
+    }
+
+    public void setOrigem(Vertice origem) {
+        this.origem = origem;
+    }
+
+    public Vertice getDestino() {
         return this.destino;
     }
 
-    public int getPeso() {
-        return this.peso;
-    }
-
-    public void setDestino(String destino) {
+    public void setDestino(Vertice destino) {
         this.destino = destino;
     }
 
-    public void setPeso(int peso) {
-        if (peso > 0) {
-            this.peso = peso;
+    public int getDistancia() {
+        return this.distancia;
+    }
+
+    public void setDistancia(int distancia) {
+        if (distancia > 0) {
+            this.distancia = distancia;
         } else {
             throw new IllegalArgumentException("A distância - peso - deve ser maior que zero");
         }
     }
+
+    @Override
+    public String toString(){
+        return destino + " (" + distancia + ")";
+    }
+
 }
