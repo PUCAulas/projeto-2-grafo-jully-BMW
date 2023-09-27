@@ -37,15 +37,15 @@ public class Grafo {
     }
 
     public List<String> cidadesInalcancaveis(String cidadeOrigem) {
-        List<String> cidadesInalcançaveis = new ArrayList<>();
+        List<String> cidadesInalcancaveis = new ArrayList<>();
         Set<String> visitadas = new HashSet<>();
         visitarCidades(cidadeOrigem, visitadas);
         for (String cidade : listaDeCidades.keySet()) {
             if (!visitadas.contains(cidade)) {
-                cidadesInalcançaveis.add(cidade);
+                cidadesInalcancaveis.add(cidade);
             }
         }
-        return cidadesInalcançaveis;
+        return cidadesInalcancaveis;
     }
 
     private void visitarCidades(String cidade, Set<String> visitadas) {
