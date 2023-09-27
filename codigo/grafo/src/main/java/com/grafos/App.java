@@ -16,23 +16,16 @@ public class App {
     public static void main(String[] args) {
         Grafo grafo = new Grafo();
 
-        String rodoviaria = "rotas.txt";
+        String rodoviaria = "codigo\\grafo\\src\\main\\java\\com\\grafos\\rotas.txt";
 
         try (BufferedReader br = new BufferedReader(new FileReader(rodoviaria))) {
             String linha;
-
-            String cidadeOrigem = br.readLine();
-            cidadeOrigem = cidadeOrigem.split(":")[0].trim();
 
             while ((linha = br.readLine()) != null) {
                 String[] partes = linha.split(":");
                 String cidade = partes[0].trim();
                 String[] conexoes = partes[1].split(",");
-                List<String> conexoesCidade = new ArrayList<>();
-                for (String conexao : conexoes) {
-                    conexoesCidade.add(conexao.trim());
-                }
-                grafo.adicionarCidade(cidade, conexoesCidade);
+                grafo.adicionarCidade(cidade, conexoes);
             }
 
         } catch (IOException e) {
@@ -40,7 +33,7 @@ public class App {
             e.printStackTrace();
         }
 
-        grafo.toString("Joanesburgo");
+        System.out.println(grafo.toString("Joanesburgo"));
 
     }
 
