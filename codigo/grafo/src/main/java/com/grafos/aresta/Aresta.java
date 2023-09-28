@@ -1,31 +1,29 @@
 package com.grafos.aresta;
 
-import com.grafos.vertice.Vertice;
-
 public class Aresta {
-    private Vertice origem;
-    private Vertice destino;
+    private String origem;
+    private String destino;
     private int distancia;
     
-    public Aresta(Vertice origem, Vertice destino, int distancia) {
+    public Aresta(String origem, String destino, int distancia) {
         this.origem = origem;
         this.destino = destino;
         this.distancia = distancia;
     }
 
-    public Vertice getOrigem() {
+    public String getOrigem() {
         return this.origem;
     }
 
-    public void setOrigem(Vertice origem) {
+    public void setOrigem(String origem) {
         this.origem = origem;
     }
 
-    public Vertice getDestino() {
+    public String getDestino() {
         return this.destino;
     }
 
-    public void setDestino(Vertice destino) {
+    public void setDestino(String destino) {
         this.destino = destino;
     }
 

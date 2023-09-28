@@ -1,5 +1,6 @@
 package com.grafos.grafo;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,13 +13,27 @@ import com.grafos.vertice.Vertice;
 
 public class Grafo {
     private Map<String, ArrayList<Aresta>> listaDeCidades = new HashMap<String, ArrayList<Aresta>>();
+    private ArrayList<Vertice> verticesIniciais = new ArrayList<Vertice>();
     static ArrayList<Aresta> arestas = new ArrayList<>();
 
-    public void adicionarCidade(String cidade, String[] conexoes) {
+
+    public Vertice getVertice(String cidade) {
+        for(Vertice vertice : verticesIniciais){
+            if(vertice.getNome().equals(cidade))
+                return vertice;
+        }
+        return null;            
+    }
+
+    public void setVerticesIniciais(ArrayList<Vertice> verticesIniciais) {
+        this.verticesIniciais = verticesIniciais;
+    }
+
+    public void adicionarArestas(String cidade, String[] conexoes) {
         for (String conexao : conexoes) {
             String[] dadosConexao = conexao.trim().split("\\(");
             int distancia = Integer.parseInt(dadosConexao[1].replaceAll("[^0-9]", ""));
-            arestas.add(new Aresta((new Vertice(cidade)), (new Vertice(dadosConexao[0])), distancia));
+            arestas.add(new Aresta(cidade, dadosConexao[0], distancia));
         }
         listaDeCidades.put(cidade, arestas);
     }
@@ -69,7 +84,7 @@ public class Grafo {
 
         ArrayList<Aresta> conexoes = listaDeCidades.get(cidade);
         for (Aresta aresta : conexoes) {
-            texto.append(" ---> ").append(aresta.getDestino().getNome()).append(" (Peso: ").append(aresta.getDistancia())
+            texto.append(" ---> ").append(aresta.getDestino()).append(" (Peso: ").append(aresta.getDistancia())
                     .append(")\n");
         }
         return texto.toString();
