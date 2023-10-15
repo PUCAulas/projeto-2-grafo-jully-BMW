@@ -1,88 +1,89 @@
 package com.grafos;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Map;
 
-import com.grafos.BFS.BFS;
 import com.grafos.grafo.Grafo;
-import com.grafos.vertice.Vertice;
 
 public class App {
-    static Grafo grafo = new Grafo();
-    static ArrayList<Vertice> vertices = new ArrayList<Vertice>();
+
+    static final String rodoviaria = "codigo\\grafo\\src\\main\\java\\com\\grafos\\rotas.txt";
+    static final String rotaEureliana = "codigo\\grafo\\src\\main\\java\\com\\grafos\\rotaEureliana.txt";
+    static final String rotaDesconexa = "codigo\\grafo\\src\\main\\java\\com\\grafos\\rotaNConectada.txt";
+    // Crie a matriz de distâncias a partir do arquivo
+    static Map<String, Integer> vertexIndices = new HashMap<>();
 
     public static void main(String[] args) {
-        int op = -1;
-        BFS busca;
-        Vertice vertice;
-        Scanner input = new Scanner(System.in);
 
-        String rodoviaria = "codigo\\grafo\\src\\main\\java\\com\\grafos\\rotas.txt";
+        // Criação Grafo para questão A, B e C
+        List<List<Integer>> ListGraph = Grafo.createDistanceAdjacencyList(rodoviaria, vertexIndices);
+        System.out.println(vertexIndices);
 
-        adicionarVertices();
+        // Questão C
+        // (c) uma recomendação de visitação em todas
+        // as cidades e todas as estradas,
 
-        try (BufferedReader br = new BufferedReader(new FileReader(rodoviaria))) {
-            String linha;
+        EulerianPathDirectedEdgesAdjacencyList solver;
+        solver = new EulerianPathDirectedEdgesAdjacencyList(ListGraph);
 
-            while ((linha = br.readLine()) != null) {
-                String[] partes = linha.split(":");
-                String cidade = partes[0].trim();
-                String[] conexoes = partes[1].split(",");
+        // Outputs path: [1, 3, 5, 6, 3, 2, 4, 3, 1, 2, 2, 4, 6]
+        System.out.println("Caminho para perrcorer todas cidades e estradas possiveis: "
+                + Arrays.toString(solver.getEulerianPath()));
 
-                grafo.adicionarArestas(cidade, conexoes);
+        // ### Questão A e B
+        // a) se existe estrada de qualquer cidade para
+        // qualquer cidade, (b) no caso de não ser possível chegar em alguma cidade via
+        // transporte terrestre,
+        // identifique quais cidades encontram-se nessas condições,
+
+        GraphConnectivityChecker checker = new GraphConnectivityChecker(ListGraph);
+        List<Integer> unreachableVertices = checker.findUnreachableVertices();
+
+        if (unreachableVertices.isEmpty()) {
+            System.out.println("O grafo é conexo. Existe estrada de qualquer cidade para qualquer cidade");
+        } else {
+            System.out.println("O grafo não é conexo. Cidades não alcançáveis:");
+            for (int i = 0; i < unreachableVertices.size(); i++) {
+                int cityIndex = unreachableVertices.get(i);
+                String cityName = Grafo.findCityByIndex(vertexIndices, cityIndex);
+                System.out.print("\n -" + cityName);
             }
-
-        } catch (IOException e) {
-            System.err.println("Erro ao ler o arquivo.");
-            e.printStackTrace();
         }
+        // ----------------------------------------------------------------------------------------
 
-        System.out.println(grafo.toString("Joanesburgo"));
+        // // (d) recomendação de uma rota para um passageiro que deseja partir
+        // // da rodoviária, percorrer todas as cidades conectadas e retornar à
+        // rodoviária,
+        // // percorrendo a menor distância possível.
 
-        // while(op != 0){
-        //     System.out.print("\t--- CAMINHO EM GRAFOS ---\n");
-        //     System.out.print("1 - \n2 - \n3 - Recomendacao de rota\n\tEscolha: ");
-        //     op = input.nextInt();
+        // Crie a matriz de distâncias a partir do arquivo
+        int startNode = 0;
+        double[][] matrixGraph = Grafo.createDistanceMatrix(rodoviaria, vertexIndices);
 
-        //     switch(op){
-        //         case 1:
+        ShortestPath ShortestPathSolver = new ShortestPath(startNode, matrixGraph);
+        // Obtém a turnê do caixeiro viajante
+        List<Integer> tour = ShortestPathSolver.getTour();
 
-        //         break;
-        //         case 2:
-        //         break;
-        //         case 3:
-        //             // ArrayList<Vertice> resultadoBFS = busca.buscaEmLargura("Joanesburgo");
-
-        //             // System.out.println("Resultado da Busca em Largura a partir de " + origem.getNome() + ":");
-        //             // for (Vertice v : resultadoBFS) {
-        //             //     System.out.println(v.getNome());
-        //             // }
-        //         break;
-        //     }
-        // }
-    }
-
-
-    public static void adicionarVertices(){
-        String rodoviaria = "codigo\\grafo\\src\\main\\java\\com\\grafos\\rotas.txt";
-
-        try (BufferedReader br = new BufferedReader(new FileReader(rodoviaria))) {
-            String linha;
-
-            while ((linha = br.readLine()) != null) {
-                String[] partes = linha.split(":");
-                String cidade = partes[0].trim();
-                vertices.add(new Vertice(cidade));
+        // Imprime a turnê com os nomes das cidades
+        System.out.print("Tour: ");
+        for (int i = 0; i < tour.size(); i++) {
+            int cityIndex = tour.get(i);
+            String cityName = Grafo.findCityByIndex(vertexIndices, cityIndex);
+            System.out.print(cityName);
+            if (i < tour.size() - 1) {
+                System.out.print(" -> ");
             }
-            grafo.setVerticesIniciais(vertices);
-
-        } catch (IOException e) {
-            System.err.println("Erro ao ler o arquivo.");
-            e.printStackTrace();
         }
+        System.out.println();
+
+        // Imprime o custo minimo da turnê
+        System.out.println("Tour cost: " + ShortestPathSolver.getTourCost());
+
     }
 }
