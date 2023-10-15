@@ -1,0 +1,6 @@
+Nova York: Los Angeles (2448), Chicago (1146)
+Los Angeles: Nova York (2448)
+Chicago: Nova York (1146)
+Londres: Paris (214), Berlim (683)
+Paris: Londres (214)
+Berlim: Londres (683)

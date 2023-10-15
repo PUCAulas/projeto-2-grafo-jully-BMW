@@ -93,8 +93,6 @@ public class Grafo {
             int n = vertexIndices.size();
             List<List<Integer>> graph = initializeEmptyGraph(n);
 
-            System.out.println(vertexIndices);
-
             // Reset the reader to the beginning of the file
             reader.close();
 
@@ -145,8 +143,6 @@ public class Grafo {
             int n = vertexIndices.size();
 
             double[][] distanceMatrix = new double[n][n];
-
-            System.out.println(vertexIndices);
 
             // Reset the reader to the beginning of the file
             reader.close();
