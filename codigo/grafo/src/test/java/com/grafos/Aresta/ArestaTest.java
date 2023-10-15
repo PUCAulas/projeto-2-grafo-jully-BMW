@@ -14,8 +14,8 @@ public class ArestaTest {
     @Test
     public void testSetOrigem() {
         Aresta aresta = new Aresta("Belo Horizonte", "São Paulo", 10);
-        aresta.setOrigem("C");
-        assertEquals("C", aresta.getOrigem());
+        aresta.setOrigem("Belo Horizonte");
+        assertEquals("Belo Horizonte", aresta.getOrigem());
     }
 
     @Test
@@ -27,8 +27,8 @@ public class ArestaTest {
     @Test
     public void testSetDestino() {
         Aresta aresta = new Aresta("Belo Horizonte", "São Paulo", 10);
-        aresta.setDestino("D");
-        assertEquals("D", aresta.getDestino());
+        aresta.setDestino("São Paulo");
+        assertEquals("São Paulp", aresta.getDestino());
     }
 
     @Test
