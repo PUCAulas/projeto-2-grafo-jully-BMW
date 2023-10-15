@@ -1,9 +1,5 @@
 package com.grafos;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -14,10 +10,10 @@ import com.grafos.grafo.Grafo;
 
 public class App {
 
+    // Adicione o caminho do seu arquivo de rotas aqui ***
     static final String rodoviaria = "codigo\\grafo\\src\\main\\java\\com\\grafos\\rotas.txt";
-    static final String rotaEureliana = "codigo\\grafo\\src\\main\\java\\com\\grafos\\rotaEureliana.txt";
-    static final String rotaDesconexa = "codigo\\grafo\\src\\main\\java\\com\\grafos\\rotaNConectada.txt";
-    // Crie a matriz de distâncias a partir do arquivo
+
+    // Cria a matriz de distâncias a partir do arquivo
     static Map<String, Integer> vertexIndices = new HashMap<>();
 
     public static void main(String[] args) {
@@ -28,9 +24,16 @@ public class App {
         do {
             System.out.println("Escolha uma opção:");
             System.out.println("1. Questão A e B");
+            System.out.println("\t a) se existe estrada de qualquer cidade para qualquer cidade?");
+            System.out
+                    .println("\t b) no caso de não ser possível chegar em alguma cidade via transporte terrestre");
             System.out.println("2. Questão C");
+            System.out.println(
+                    "\t c) uma recomendação de visitação em todas as cidades e todas as estradas");
             System.out.println("3. Questão D");
-            System.out.println("0. Sair");
+            System.out.println(
+                    "\t d) recomendação de uma rota para um passageiro que deseja partir  da rodoviária, percorrer todas as cidades conectadas e retornar à menor distância possivel");
+            System.out.println("0. Sair\n");
 
             choice = scanner.nextInt();
 
@@ -44,11 +47,6 @@ public class App {
 
             switch (choice) {
                 case 1:
-                    System.out.println("a) se existe estrada de qualquer cidade para qualquer cidade?");
-                    System.out
-                            .println("b) no caso de não ser possível chegar em alguma cidade via transporte terrestre"
-                                    + "\t \n");
-
                     QuestaoAeB checker = new QuestaoAeB(ListGraph);
                     List<Integer> unreachableVertices = checker.findUnreachableVertices();
 
@@ -65,8 +63,6 @@ public class App {
                     }
                     break;
                 case 2:
-                    System.out.println(
-                            " c) uma recomendação de visitação em todas as cidades e todas as estradas" + "\t \n");
                     QuestaoC solver;
                     solver = new QuestaoC(ListGraph);
 
@@ -75,9 +71,6 @@ public class App {
                             + Arrays.toString(solver.getEulerianPath()));
                     break;
                 case 3:
-                    System.out.println(
-                            "d) recomendação de uma rota para um passageiro que deseja partir  da rodoviária, percorrer todas as cidades conectadas e retornar à menor distância possivel"
-                                    + "\t \n");
                     QuestaoD ShortestPathSolver = new QuestaoD(startNode, matrixGraph);
                     // Obtém a turnê do caixeiro viajante
                     List<Integer> tour = ShortestPathSolver.getTour();
@@ -104,6 +97,12 @@ public class App {
                     System.out.println("Opção inválida. Tente novamente.");
                     break;
             }
+            // Aguarde o usuário pressionar Enter para continuar
+            System.out.println("Pressione Enter para continuar...");
+            scanner.nextLine(); // Limpa a nova linha deixada pela entrada anterior
+            scanner.nextLine(); // Aguarda o Enter
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
         } while (choice != 0);
 
         scanner.close();

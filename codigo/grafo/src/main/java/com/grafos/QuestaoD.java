@@ -1,16 +1,9 @@
 package com.grafos;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import com.grafos.grafo.Grafo;
 
 public class QuestaoD {
 
@@ -42,21 +35,21 @@ public class QuestaoD {
         this.distance = distance;
     }
 
-    // Returns the optimal tour for the traveling salesman problem.
+    // Retorna o roteiro ideal para o problema do caixeiro viajante.
     public List<Integer> getTour() {
         if (!ranSolver)
             solve();
         return tour;
     }
 
-    // Returns the minimal tour cost.
+    // Retorna o custo mínimo do passeio.
     public double getTourCost() {
         if (!ranSolver)
             solve();
         return minTourCost;
     }
 
-    // Solves the traveling salesman problem and caches solution.
+    // Resolve o problema do caixeiro viajante e solução de caches.
     public void solve() {
 
         if (ranSolver)
@@ -65,7 +58,7 @@ public class QuestaoD {
         final int END_STATE = (1 << N) - 1;
         Double[][] memo = new Double[N][1 << N];
 
-        // Add all outgoing edges from the starting node to memo table.
+        // Adiciona todas as arestas de saída do nó inicial à tabela de notas.
         for (int end = 0; end < N; end++) {
             if (end == start)
                 continue;
@@ -98,7 +91,7 @@ public class QuestaoD {
             }
         }
 
-        // Connect tour back to starting node and minimize cost.
+        // Conecta o tour de volta ao nó inicial e minimize os custos.
         for (int i = 0; i < N; i++) {
             if (i == start)
                 continue;
@@ -112,7 +105,7 @@ public class QuestaoD {
         int state = END_STATE;
         tour.add(start);
 
-        // Reconstruct TSP path from memo table.
+        // Reconstrua o caminho do viajante da tabela de memo.
         for (int i = 1; i < N; i++) {
 
             int bestIndex = -1;
@@ -142,36 +135,35 @@ public class QuestaoD {
         return ((1 << elem) & subset) == 0;
     }
 
-    // This method generates all bit sets of size n where r bits
-    // are set to one. The result is returned as a list of integer masks.
+    // Este método gera todos os conjuntos de bits de tamanho n onde r bits
+    // que estão definidos como um. O resultado é retornado como uma lista de máscaras inteiras.
     public static List<Integer> combinations(int r, int n) {
         List<Integer> subsets = new ArrayList<>();
         combinations(0, 0, r, n, subsets);
         return subsets;
     }
 
-    // To find all the combinations of size r we need to recurse until we have
-    // selected r elements (aka r = 0), otherwise if r != 0 then we still need to select
-    // an element which is found after the position of our last selected element
+    // Para encontrar todas as combinações de tamanho r precisamos recorrer até que tenhamos
+    // r elementos selecionados (também conhecidos como r = 0), caso contrário, se r! = 0, ainda precisamos selecionar
+    // um elemento que é encontrado após a posição do nosso último elemento selecionado
     private static void combinations(int set, int at, int r, int n, List<Integer> subsets) {
 
-        // Return early if there are more elements left to select than what is
-        // available.
+        // Retorne mais cedo se houver mais elementos para selecionar do que o disponivel
         int elementsLeftToPick = n - at;
         if (elementsLeftToPick < r)
             return;
 
-        // We selected 'r' elements so we found a valid subset!
+        // Selecionamos elementos 'r' e encontramos um subconjunto válido
         if (r == 0) {
             subsets.add(set);
         } else {
             for (int i = at; i < n; i++) {
-                // Try including this element
+                // Tenta incluir este elemento
                 set ^= (1 << i);
 
                 combinations(set, i + 1, r - 1, n, subsets);
 
-                // Backtrack and try the instance where we did not include this element
+                // Volte e tente a instância onde não incluímos este elemento
                 set ^= (1 << i);
             }
         }

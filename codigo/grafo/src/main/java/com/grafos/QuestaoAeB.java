@@ -40,23 +40,4 @@ public class QuestaoAeB {
       }
     }
   }
-
-  public static void main(String[] args) {
-    // Exemplo de uso:
-    int n = 5;
-    List<List<Integer>> graph = new ArrayList<>(n);
-    for (int i = 0; i < n; i++) {
-      graph.add(new ArrayList<Integer>());
-    }
-    // Adicione as arestas ao grafo.
-
-    QuestaoAeB checker = new QuestaoAeB(graph);
-    List<Integer> unreachableVertices = checker.findUnreachableVertices();
-
-    if (unreachableVertices.isEmpty()) {
-      System.out.println("O grafo é conectado.");
-    } else {
-      System.out.println("O grafo não é conectado. Vértices não alcançáveis: " + unreachableVertices);
-    }
-  }
 }
