@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import com.grafos.grafo.Grafo;
 
@@ -21,69 +22,91 @@ public class App {
 
     public static void main(String[] args) {
 
-        // Criação Grafo para questão A, B e C
-        List<List<Integer>> ListGraph = Grafo.createDistanceAdjacencyList(rodoviaria, vertexIndices);
-        System.out.println(vertexIndices);
+        Scanner scanner = new Scanner(System.in);
+        int choice;
 
-        // Questão C
-        // (c) uma recomendação de visitação em todas
-        // as cidades e todas as estradas,
+        do {
+            System.out.println("Escolha uma opção:");
+            System.out.println("1. Questão A e B");
+            System.out.println("2. Questão C");
+            System.out.println("3. Questão D");
+            System.out.println("0. Sair");
 
-        EulerianPathDirectedEdgesAdjacencyList solver;
-        solver = new EulerianPathDirectedEdgesAdjacencyList(ListGraph);
+            choice = scanner.nextInt();
 
-        // Outputs path: [1, 3, 5, 6, 3, 2, 4, 3, 1, 2, 2, 4, 6]
-        System.out.println("Caminho para perrcorer todas cidades e estradas possiveis: "
-                + Arrays.toString(solver.getEulerianPath()));
+            // Criação Grafo para questão A, B e C
+            List<List<Integer>> ListGraph = Grafo.createDistanceAdjacencyList(rodoviaria, vertexIndices);
+            System.out.println(vertexIndices);
 
-        // ### Questão A e B
-        // a) se existe estrada de qualquer cidade para
-        // qualquer cidade, (b) no caso de não ser possível chegar em alguma cidade via
-        // transporte terrestre,
-        // identifique quais cidades encontram-se nessas condições,
+            // Crie a matriz de distâncias a partir do arquivo
+            int startNode = 0;
+            double[][] matrixGraph = Grafo.createDistanceMatrix(rodoviaria, vertexIndices);
 
-        GraphConnectivityChecker checker = new GraphConnectivityChecker(ListGraph);
-        List<Integer> unreachableVertices = checker.findUnreachableVertices();
+            switch (choice) {
+                case 1:
+                    System.out.println("a) se existe estrada de qualquer cidade para qualquer cidade?");
+                    System.out
+                            .println("b) no caso de não ser possível chegar em alguma cidade via transporte terrestre"
+                                    + "\t \n");
 
-        if (unreachableVertices.isEmpty()) {
-            System.out.println("O grafo é conexo. Existe estrada de qualquer cidade para qualquer cidade");
-        } else {
-            System.out.println("O grafo não é conexo. Cidades não alcançáveis:");
-            for (int i = 0; i < unreachableVertices.size(); i++) {
-                int cityIndex = unreachableVertices.get(i);
-                String cityName = Grafo.findCityByIndex(vertexIndices, cityIndex);
-                System.out.print("\n -" + cityName);
+                    QuestaoAeB checker = new QuestaoAeB(ListGraph);
+                    List<Integer> unreachableVertices = checker.findUnreachableVertices();
+
+                    if (unreachableVertices.isEmpty()) {
+                        System.out.println(
+                                "O grafo é conexo. Existe estrada de qualquer cidade para qualquer cidade" + "\t \n");
+                    } else {
+                        System.out.println("O grafo não é conexo. Cidades não alcançáveis:");
+                        for (int i = 0; i < unreachableVertices.size(); i++) {
+                            int cityIndex = unreachableVertices.get(i);
+                            String cityName = Grafo.findCityByIndex(vertexIndices, cityIndex);
+                            System.out.print("\n -" + cityName);
+                        }
+                    }
+                    break;
+                case 2:
+                    System.out.println(
+                            " c) uma recomendação de visitação em todas as cidades e todas as estradas" + "\t \n");
+                    QuestaoC solver;
+                    solver = new QuestaoC(ListGraph);
+
+                    // Outputs path: [1, 3, 5, 6, 3, 2, 4, 3, 1, 2, 2, 4, 6]
+                    System.out.println("Caminho para perrcorer todas cidades e estradas possiveis: "
+                            + Arrays.toString(solver.getEulerianPath()));
+                    break;
+                case 3:
+                    System.out.println(
+                            "d) recomendação de uma rota para um passageiro que deseja partir  da rodoviária, percorrer todas as cidades conectadas e retornar à menor distância possivel"
+                                    + "\t \n");
+                    QuestaoD ShortestPathSolver = new QuestaoD(startNode, matrixGraph);
+                    // Obtém a turnê do caixeiro viajante
+                    List<Integer> tour = ShortestPathSolver.getTour();
+
+                    // Imprime a turnê com os nomes das cidades
+                    System.out.print("Percurso: ");
+                    for (int i = 0; i < tour.size(); i++) {
+                        int cityIndex = tour.get(i);
+                        String cityName = Grafo.findCityByIndex(vertexIndices, cityIndex);
+                        System.out.print(cityName);
+                        if (i < tour.size() - 1) {
+                            System.out.print(" -> ");
+                        }
+                    }
+                    System.out.println();
+
+                    // Imprime o custo minimo da turnê
+                    System.out.println("Distância do percurso: " + ShortestPathSolver.getTourCost());
+                    break;
+                case 0:
+                    System.out.println("Saindo...");
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+                    break;
             }
-        }
-        // ----------------------------------------------------------------------------------------
+        } while (choice != 0);
 
-        // // (d) recomendação de uma rota para um passageiro que deseja partir
-        // // da rodoviária, percorrer todas as cidades conectadas e retornar à
-        // rodoviária,
-        // // percorrendo a menor distância possível.
-
-        // Crie a matriz de distâncias a partir do arquivo
-        int startNode = 0;
-        double[][] matrixGraph = Grafo.createDistanceMatrix(rodoviaria, vertexIndices);
-
-        ShortestPath ShortestPathSolver = new ShortestPath(startNode, matrixGraph);
-        // Obtém a turnê do caixeiro viajante
-        List<Integer> tour = ShortestPathSolver.getTour();
-
-        // Imprime a turnê com os nomes das cidades
-        System.out.print("Tour: ");
-        for (int i = 0; i < tour.size(); i++) {
-            int cityIndex = tour.get(i);
-            String cityName = Grafo.findCityByIndex(vertexIndices, cityIndex);
-            System.out.print(cityName);
-            if (i < tour.size() - 1) {
-                System.out.print(" -> ");
-            }
-        }
-        System.out.println();
-
-        // Imprime o custo minimo da turnê
-        System.out.println("Tour cost: " + ShortestPathSolver.getTourCost());
+        scanner.close();
 
     }
 }

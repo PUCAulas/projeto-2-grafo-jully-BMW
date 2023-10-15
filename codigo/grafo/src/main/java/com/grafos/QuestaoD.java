@@ -12,7 +12,7 @@ import java.util.Map;
 
 import com.grafos.grafo.Grafo;
 
-public class ShortestPath {
+public class QuestaoD {
 
     private final int N, start;
     private final double[][] distance;
@@ -20,11 +20,11 @@ public class ShortestPath {
     private double minTourCost = Double.POSITIVE_INFINITY;
     private boolean ranSolver = false;
 
-    public ShortestPath(double[][] distance) {
+    public QuestaoD(double[][] distance) {
         this(0, distance);
     }
 
-    public ShortestPath(int start, double[][] distance) {
+    public QuestaoD(int start, double[][] distance) {
         N = distance.length;
 
         if (N <= 2)
