@@ -3,13 +3,13 @@ package com.grafos;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GraphConnectivityChecker {
+public class QuestaoAeB {
 
   private final int n; // Número de vértices no grafo.
   private final List<List<Integer>> graph; // Lista de adjacência representando o grafo.
   private boolean[] visited;
 
-  public GraphConnectivityChecker(List<List<Integer>> graph) {
+  public QuestaoAeB(List<List<Integer>> graph) {
     this.n = graph.size();
     this.graph = graph;
   }
@@ -50,7 +50,7 @@ public class GraphConnectivityChecker {
     }
     // Adicione as arestas ao grafo.
 
-    GraphConnectivityChecker checker = new GraphConnectivityChecker(graph);
+    QuestaoAeB checker = new QuestaoAeB(graph);
     List<Integer> unreachableVertices = checker.findUnreachableVertices();
 
     if (unreachableVertices.isEmpty()) {

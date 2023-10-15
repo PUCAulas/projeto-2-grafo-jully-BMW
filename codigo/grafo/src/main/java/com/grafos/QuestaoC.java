@@ -1,26 +1,9 @@
-/*
- * Implementation of finding an Eulerian Path on a graph. This implementation verifies that the
- * input graph is fully connected and supports self loops and repeated edges between nodes.
- *
- * <p>Test against: https://open.kattis.com/problems/eulerianpath
- * http://codeforces.com/contest/508/problem/D
- *
- * <p>Run: ./gradlew run -Palgorithm=graphtheory.EulerianPathDirectedEdgesAdjacencyList
- *
- * <p>Time Complexity: O(E)
- *
- * @author William Fiset, william.alexandre.fiset@gmail.com
- */
 package com.grafos;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.grafos.grafo.Grafo;
-
-public class EulerianPathDirectedEdgesAdjacencyList {
+public class QuestaoC {
 
   private final int n;
   private int edgeCount;
@@ -28,7 +11,7 @@ public class EulerianPathDirectedEdgesAdjacencyList {
   private LinkedList<Integer> path;
   private List<List<Integer>> graph;
 
-  public EulerianPathDirectedEdgesAdjacencyList(List<List<Integer>> graph) {
+  public QuestaoC(List<List<Integer>> graph) {
     if (graph == null)
       throw new IllegalArgumentException("Grafo não pode ser nulo");
     n = graph.size();
@@ -36,8 +19,8 @@ public class EulerianPathDirectedEdgesAdjacencyList {
     path = new LinkedList<>();
   }
 
-  // Returns a list of edgeCount + 1 node ids that give the Eulerian path or
-  // null if no path exists or the graph is disconnected.
+  // Retorna uma lista de IDs de nó edgeCount + 1 que fornecem o caminho Euleriano ou
+  // nulo se nenhum caminho existir ou o gráfico estiver desconectado
   public int[] getEulerianPath() {
     setUp();
 
@@ -47,8 +30,8 @@ public class EulerianPathDirectedEdgesAdjacencyList {
     }
     dfs(findStartNode());
 
-    // Make sure all edges of the graph were traversed. It could be the
-    // case that the graph is disconnected in which case return null.
+    // Certifique-se de que todas as arestas do gráfico foram atravessadas. Poderia ser o
+    // caso o grafo esteja desconectado, nesse caso retorne nulo.
     if (path.size() != edgeCount + 1) {
       System.out.println("Não há caminho que percorra todas as cidades e estradas.");
       return null;
@@ -64,13 +47,13 @@ public class EulerianPathDirectedEdgesAdjacencyList {
   }
 
   private void setUp() {
-    // Arrays that track the in degree and out degree of each node.
+    // Cria matrizes que rastreiam o grau de entrada e saída de cada nó.
     in = new int[n];
     out = new int[n];
 
     edgeCount = 0;
 
-    // Compute in and out node degrees.
+    // Calcule os graus dos nós de entrada e saída.
     for (int from = 0; from < n; from++) {
       for (int to : graph.get(from)) {
         in[to]++;
@@ -99,17 +82,17 @@ public class EulerianPathDirectedEdgesAdjacencyList {
   private int findStartNode() {
     int start = 0;
     for (int i = 0; i < n; i++) {
-      // Unique starting node.
+      // Nó inicial exclusivo.
       if (out[i] - in[i] == 1)
         return i;
-      // Start at a node with an outgoing edge.
+      // Comece em um nó com uma aresta de saída.
       if (out[i] > 0)
         start = i;
     }
     return start;
   }
 
-  // Perform DFS to find Eulerian path.
+  // Execute DFS (Busca em profundidade) para encontrar o caminho Euleriano.
   private void dfs(int at) {
     while (out[at] != 0) {
       int next = graph.get(at).get(--out[at]);
@@ -131,7 +114,7 @@ public class EulerianPathDirectedEdgesAdjacencyList {
     return true;
   }
 
-  // Realiza uma DFS para verificar a conectividade do grafo.
+  // Realiza uma DFS (Busca em profundidade) para verificar a conectividade do grafo.
   private void dfsForConnectivity(int at, boolean[] visited) {
     visited[at] = true;
     for (int next : graph.get(at)) {

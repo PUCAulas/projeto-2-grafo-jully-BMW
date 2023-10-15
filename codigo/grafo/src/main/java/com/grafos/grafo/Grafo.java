@@ -66,8 +66,6 @@ public class Grafo {
         g.get(from).add(to);
     }
 
-    /* Graph creation helper methods */
-
     public static List<List<Integer>> initializeEmptyGraph(int n) {
         List<List<Integer>> graph = new ArrayList<>(n);
         for (int i = 0; i < n; i++) {
@@ -93,10 +91,10 @@ public class Grafo {
             int n = vertexIndices.size();
             List<List<Integer>> graph = initializeEmptyGraph(n);
 
-            // Reset the reader to the beginning of the file
+            // Redefinir o leitor para o início do arquivo
             reader.close();
 
-            // Create a new reader for the same file
+            // Cria um novo leitor para o mesmo arquivo
             BufferedReader newReader = new BufferedReader(
                     new InputStreamReader(new FileInputStream(filePath), "UTF-8"));
 
@@ -144,13 +142,13 @@ public class Grafo {
 
             double[][] distanceMatrix = new double[n][n];
 
-            // Reset the reader to the beginning of the file
+            // Redefinir o leitor para o início do arquivo
             reader.close();
 
             for (double[] row : distanceMatrix)
                 java.util.Arrays.fill(row, 100000.00);
 
-            // Create a new reader for the same file
+            // Cria um novo leitor para o mesmo arquivo
             BufferedReader newReader = new BufferedReader(
                     new InputStreamReader(new FileInputStream(filePath), "UTF-8"));
 
@@ -174,7 +172,7 @@ public class Grafo {
             }
 
             // // Função para imprimir a matriz de distâncias
-            Grafo.printDistanceMatrix(distanceMatrix, vertexIndices);
+            // Grafo.printDistanceMatrix(distanceMatrix, vertexIndices);
 
             newReader.close();
 
@@ -223,7 +221,7 @@ public class Grafo {
                     System.out.print(String.format("%-" + cellWidth + ".1f", distance == 100000.00 ? 0 : distance));
                 }
             }
-            System.out.println();
+            System.out.println("\t");
         }
     }
 }
