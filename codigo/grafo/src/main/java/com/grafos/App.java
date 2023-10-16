@@ -88,7 +88,7 @@ public class App {
                     System.out.println();
 
                     // Imprime o custo minimo da turnê
-                    System.out.println("Distância do percurso: " + ShortestPathSolver.getTourCost());
+                    System.out.println("Distância do percurso: " + ShortestPathSolver.getTourCost() + "Km");
                     break;
                 case 0:
                     System.out.println("Saindo...");
