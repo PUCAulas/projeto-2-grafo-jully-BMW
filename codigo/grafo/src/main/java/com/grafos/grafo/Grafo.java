@@ -74,7 +74,7 @@ public class Grafo {
         return graph;
     }
 
-    // Função para criar a matriz de distâncias a partir do arquivo
+    // Função para criar a lista de distâncias a partir do arquivo
     public static List<List<Integer>> createDistanceAdjacencyList(String filePath, Map<String, Integer> vertexIndices) {
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(new FileInputStream(filePath), "UTF-8"))) {
