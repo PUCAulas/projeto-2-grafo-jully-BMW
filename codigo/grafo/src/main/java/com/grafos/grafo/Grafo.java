@@ -130,6 +130,8 @@ public class Grafo {
                 new InputStreamReader(new FileInputStream(filePath), "UTF-8"))) {
             String line;
             int index = 0;
+            System.out.println(vertexIndices);
+
 
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(":");
@@ -137,6 +139,7 @@ public class Grafo {
                 vertexIndices.put(vertexName, index);
                 index++;
             }
+
 
             int n = vertexIndices.size();
 
