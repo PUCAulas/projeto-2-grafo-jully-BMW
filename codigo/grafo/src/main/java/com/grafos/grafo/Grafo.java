@@ -116,7 +116,7 @@ public class Grafo {
             }
 
             newReader.close();
-            
+
             return graph;
         } catch (IOException e) {
             e.printStackTrace();
@@ -130,8 +130,6 @@ public class Grafo {
                 new InputStreamReader(new FileInputStream(filePath), "UTF-8"))) {
             String line;
             int index = 0;
-            System.out.println(vertexIndices);
-
 
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(":");
@@ -140,18 +138,15 @@ public class Grafo {
                 index++;
             }
 
-
             int n = vertexIndices.size();
-
             double[][] distanceMatrix = new double[n][n];
 
-            // Redefinir o leitor para o início do arquivo
-            reader.close();
+            // Não redefina o leitor, pois você já leu o arquivo uma vez
 
             for (double[] row : distanceMatrix)
                 java.util.Arrays.fill(row, 100000.00);
 
-            // Cria um novo leitor para o mesmo arquivo
+            // Crie um novo leitor para o mesmo arquivo
             BufferedReader newReader = new BufferedReader(
                     new InputStreamReader(new FileInputStream(filePath), "UTF-8"));
 
@@ -165,17 +160,13 @@ public class Grafo {
                 for (String connection : connections) {
                     String[] connParts = connection.trim().split("\\(");
                     String toCity = connParts[0].trim();
-                    double distance = Double.parseDouble(connParts[1].replaceAll("\\)",
-                            "").trim());
+                    double distance = Double.parseDouble(connParts[1].replaceAll("\\)", "").trim());
 
                     int toIndex = vertexIndices.get(toCity);
 
                     distanceMatrix[fromIndex][toIndex] = distance;
                 }
             }
-
-            // // Função para imprimir a matriz de distâncias
-            // Grafo.printDistanceMatrix(distanceMatrix, vertexIndices);
 
             newReader.close();
 

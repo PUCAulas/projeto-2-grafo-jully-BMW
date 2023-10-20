@@ -11,7 +11,7 @@ import com.grafos.grafo.Grafo;
 public class App {
 
     // Adicione o caminho do seu arquivo de rotas aqui ***
-    static final String rodoviaria = "projeto-2-grafo-jully-BMW\\codigo\\grafo\\src\\main\\java\\com\\grafos\\rotas.txt";
+    static final String rodoviaria = "codigo\\grafo\\src\\main\\java\\com\\grafos\\rotas.txt";
 
     // Cria a matriz de distâncias a partir do arquivo
     static Map<String, Integer> vertexIndices = new HashMap<>();

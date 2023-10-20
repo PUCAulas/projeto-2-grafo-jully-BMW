@@ -1,4 +1,0 @@
-Cidade_A: Cidade_B (230), Cidade_C (230), Cidade_D (230)
-Cidade_B: Cidade_A (230), Cidade_C (230), Cidade_D (230)
-Cidade_C: Cidade_A (230), Cidade_B (230), Cidade_D (230)
-Cidade_D: Cidade_A (230), Cidade_B (230), Cidade_C (230)
