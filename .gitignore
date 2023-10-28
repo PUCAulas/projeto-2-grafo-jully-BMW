@@ -1,1 +1,36 @@
 desktop.ini
+# Bytecode e arquivos compilados
+*.class
+*.jar
+
+# Diretórios de saída de compilação
+bin/
+target/
+out/
+
+# Arquivos de configuração específicos para IDEs
+.idea/
+.classpath
+.project
+.settings/
+*.iml
+*.ipr
+*.iws
+*.log
+
+# Arquivos de construção do Eclipse
+.settings/
+bin/
+
+# Arquivos de construção do NetBeans
+nb-configuration.xml
+
+# Logs e arquivos temporários
+*.log
+*.log.*
+*.tmp
+*.swp
+
+# Arquivos gerados automaticamente
+.DS_Store
+Thumbs.db
